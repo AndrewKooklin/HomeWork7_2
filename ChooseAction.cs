@@ -16,7 +16,7 @@ namespace HomeWork7_2
             do
             {
 
-                Console.WriteLine("\nВведите цифру :" +
+                Console.WriteLine("\n Введите цифру :" +
                     "\n 1 - для просмотра файла" +
                     "\n 2 - для просмотра записи" +
                     "\n 3 - для создания записи" +
@@ -81,7 +81,7 @@ namespace HomeWork7_2
                         }
                 }
 
-            } while ( key != '8');
+            } while (key != '8');
         }
     }
 }

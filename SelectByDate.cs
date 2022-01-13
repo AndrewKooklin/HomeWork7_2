@@ -12,7 +12,7 @@ namespace HomeWork7_2
         /// </summary>
         public static string[] SelectDate(string[] allLinesRecords)
         {
-            if(allLinesRecords == null)
+            if (allLinesRecords == null)
             {
                 Console.WriteLine("В файле нет записей");
                 return null;
@@ -22,23 +22,48 @@ namespace HomeWork7_2
 
             if (allLinesRecords != null)
             {
+                DateTime dataStart;
+                DateTime dataFinal;
 
-                Console.WriteLine("Введите начальную дату");
+                do
+                {
+                    Console.WriteLine("Введите начальную дату в числовом формате dd.MM.yyyy");
 
-                DateTime dataStart = Convert.ToDateTime(Console.ReadLine()).Date;
+                    bool input = DateTime.TryParse(Console.ReadLine(), out dataStart);
 
-                Console.WriteLine("Введите конечную дату");
+                    if (input)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Вы ввели неверный формат");
+                    }
+                }
+                while (true);
 
-                DateTime dateFinal = Convert.ToDateTime(Console.ReadLine()).Date;
+                do
+                {
+                    Console.WriteLine("Введите конечную дату в числовом формате dd.MM.yyyy");
 
+                    bool input = DateTime.TryParse(Console.ReadLine(), out dataFinal);
+
+                    if (input)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Вы ввели неверный формат");
+                    }
+                }
+                while (true);
 
 
                 if (allLinesRecords.Length <= 0 || allLinesRecords == null)
                 {
                     return null;
                 }
-
-
 
                 DateTime[] dateArr = new DateTime[allLinesRecords.Length];
 
@@ -53,7 +78,7 @@ namespace HomeWork7_2
                     }
                     else dateArr[i] = Convert.ToDateTime(words[1]).Date;
 
-                    if (dataStart <= dateArr[i] && dateArr[i] <= dateFinal)
+                    if (dataStart <= dateArr[i] && dateArr[i] <= dataFinal)
                     {
                         newlines[i] = allLinesRecords[i];
                     }
@@ -63,12 +88,25 @@ namespace HomeWork7_2
                     }
                 }
 
-                if (newlines == null)
-                {
-                    Console.WriteLine("\nВ файле нет таких записей");
-                    return null;
-                }
+                bool check = false;
 
+                for (int i = 0; i < newlines.Length; i++)
+                {
+                    if (newlines[i] != null)
+                    {
+                        check = false;
+                        break;
+                    }
+                    else
+                    {
+                        check = true;
+                    }                        
+                }
+                if (check)
+                {
+                        Console.WriteLine("\nВ файле нет таких записей");
+                        return null;
+                }
             }
             return newlines;
         }

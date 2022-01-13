@@ -46,7 +46,7 @@ namespace HomeWork7_2
             }
 
             int control = ControlInput.Input();
-            if(control == 0)
+            if (control == 0)
             {
                 return null;
             }
@@ -113,22 +113,28 @@ namespace HomeWork7_2
                     Console.WriteLine("В файле нет записей");
                     return null;
                 }
+
+                for (int i = 0; i < arr.Length; i++)
+                {
+                    arr[i] = arr[i].Replace("\r", "");
+                }
+
                 string[] newarr = new string[arr.Length - counter];
 
+                int count = 0;
 
                 for (int j = 0; j < newarr.Length; j++)
                 {
-                    for (int i = 0; i < arr.Length; i++)
+                    while (count < arr.Length)
                     {
-                        if (arr[i] == "" || arr[i] == null || arr[i] == "\r")
-                        {
+                        if (arr[count] == "" || arr[count] == null)
+                        {                           
+                            count++;
                             continue;
                         }
-                        else
-                        {
-                            newarr[j] = arr[i].Replace("\r", "");
-                            //j++;
-                        }
+                        newarr[j] = arr[count];
+                        count++;
+                        break;
                     }
                 }
                 return newarr;

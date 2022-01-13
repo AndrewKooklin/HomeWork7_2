@@ -30,15 +30,30 @@ namespace HomeWork7_2
                 else dateArr[i] = Convert.ToDateTime(words[1]);
             }
 
-            Console.WriteLine("\nСортировка записей по дате" +
-                "\n введите цифру :" + "\n1 - для сортировке по возрастанию даты" +
-                "\n2 - для сортировки по убыванию даты");
+            int numberSort;
 
-            string numberSort = Console.ReadLine();
+            do
+            {
+                Console.WriteLine("\n Введите цифру :" +
+                "\n 1 - для сортировке по возрастанию даты" +
+                "\n 2 - для сортировки по убыванию даты");
+
+                bool input = Int32.TryParse(Console.ReadLine(), out numberSort);
+
+                if (input)
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Вы ввели не цифру");
+                }
+            }
+            while (true);
 
             DateTime temp;
 
-            if (numberSort == "1")
+            if (numberSort == 1)
             {
                 for (int i = 0; i < dateArr.Length - 1; i++)
                 {
@@ -54,7 +69,7 @@ namespace HomeWork7_2
                 }
                 Console.WriteLine("Записи отсортированы по возрастанию даты создания");
             }
-            else if (numberSort == "2")
+            else if (numberSort == 2)
             {
                 for (int i = 0; i < dateArr.Length - 1; i++)
                 {

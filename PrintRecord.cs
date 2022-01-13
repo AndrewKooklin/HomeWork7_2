@@ -12,12 +12,21 @@ namespace HomeWork7_2
         {
             if (words != null)
             {
-                foreach (var word in words)
+                for (int i = 0; i < words.Length; i++)
                 {
-                    Console.WriteLine($"{word} ");
+                    if (words[i] == null)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        words[i] = words[i].Replace("#", " ");
+
+                        Console.WriteLine(words[i]);
+                    }
+
                 }
             }
-            
         }
         /// <summary>
         /// Печать одгой записи
@@ -25,13 +34,18 @@ namespace HomeWork7_2
         /// <param name="words"></param>
         public static void PrintOneRecord(string[] words)
         {
-            if (words != null)
+            for (int i = 0; i < words.Length; i++)
             {
-                foreach (var word in words)
+                if (words[i] == null)
                 {
-                    Console.Write($"{word} ");
+                    continue;
+                }
+                else
+                {
+                    Console.Write($"{words[i]} ");
                 }
             }
+
         }
     }
 }
