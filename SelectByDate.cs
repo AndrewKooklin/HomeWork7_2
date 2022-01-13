@@ -10,54 +10,65 @@ namespace HomeWork7_2
         /// <summary>
         /// Выбор записей по дате
         /// </summary>
-        public static string[] SelectDate(string path)
+        public static string[] SelectDate(string[] allLinesRecords)
         {
-            Console.WriteLine("Введите начальную дату");
-
-            DateTime dataStart = Convert.ToDateTime(Console.ReadLine()).Date;
-
-            Console.WriteLine("Введите конечную дату");
-
-            DateTime dateFinal = Convert.ToDateTime(Console.ReadLine()).Date;
-
-            string[] lines = Read.ReadAllLines(path);
-
-            if (lines.Length <= 0 && lines == null || lines[0] == "")
+            if(allLinesRecords == null)
             {
+                Console.WriteLine("В файле нет записей");
                 return null;
             }
 
-            string[] newlines = new string[lines.Length];
+            string[] newlines = new string[allLinesRecords.Length];
 
-            DateTime[] dateArr = new DateTime[lines.Length];
-
-            for (int i = 0; i < dateArr.Length; i++)
+            if (allLinesRecords != null)
             {
-                string[] words = lines[i].Split('#');
 
-                if (words == null || words[0] == "" || words[0] == "\n")
+                Console.WriteLine("Введите начальную дату");
+
+                DateTime dataStart = Convert.ToDateTime(Console.ReadLine()).Date;
+
+                Console.WriteLine("Введите конечную дату");
+
+                DateTime dateFinal = Convert.ToDateTime(Console.ReadLine()).Date;
+
+
+
+                if (allLinesRecords.Length <= 0 || allLinesRecords == null)
                 {
-                    newlines[i] = null;
-                    continue;
+                    return null;
                 }
-                else dateArr[i] = Convert.ToDateTime(words[1]).Date;
 
-                if (dataStart <= dateArr[i] && dateArr[i] <= dateFinal)
+
+
+                DateTime[] dateArr = new DateTime[allLinesRecords.Length];
+
+                for (int i = 0; i < dateArr.Length; i++)
                 {
-                    newlines[i] = lines[i];
+                    string[] words = allLinesRecords[i].Split('#');
+
+                    if (words == null || words[0] == "" || words[0] == "\n")
+                    {
+                        newlines[i] = null;
+                        continue;
+                    }
+                    else dateArr[i] = Convert.ToDateTime(words[1]).Date;
+
+                    if (dataStart <= dateArr[i] && dateArr[i] <= dateFinal)
+                    {
+                        newlines[i] = allLinesRecords[i];
+                    }
+                    else
+                    {
+                        newlines[i] = null;
+                    }
                 }
-                else
+
+                if (newlines == null)
                 {
-                    newlines[i] = null;
+                    Console.WriteLine("\nВ файле нет таких записей");
+                    return null;
                 }
-            }
 
-            newlines = DeleteEmpty.Rewrite(newlines);
-
-            if (newlines == null)
-            {
-                Console.WriteLine("\nВ файле нет таких записей");
-                return null;
             }
             return newlines;
         }

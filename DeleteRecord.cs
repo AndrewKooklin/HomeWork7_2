@@ -12,35 +12,32 @@ namespace HomeWork7_2
         /// </summary>
         /// <param name="path"></param>
         /// <param name="control"></param>
-        public static void Delete(string path)
+        public static string[] Delete(string[] allLinesRecords)
         {
-            string[] arr = Read.ReadAllLines(path);
-
-            int control = ControlInput.Input();
-
-            if (arr != null)
+            if (allLinesRecords != null)
             {
-                for (int i = 0; i < arr.Length; i++)
+                int control = ControlInput.Input();
+
+                for (int i = 0; i < allLinesRecords.Length; i++)
                 {
-                    if (!arr[i].StartsWith(Convert.ToInt32(control) + "#"))
+                    if (!allLinesRecords[i].StartsWith(Convert.ToInt32(control) + "#"))
                     {
-                        if ((i == arr.Length - 1) && !arr[^1].StartsWith(Convert.ToInt32(control) + "#"))
+                        if ((i == allLinesRecords.Length - 1) && !allLinesRecords[^1].StartsWith(Convert.ToInt32(control) + "#"))
                         {
                             Console.WriteLine("В файле нет такой записи");
                         }
                         continue;
                     }
-                    else if (arr[i].StartsWith(Convert.ToInt32(control) + "#"))
+                    else if (allLinesRecords[i].StartsWith(Convert.ToInt32(control) + "#"))
                     {
-                        arr[i] = null;
-
-                        Write.WriteAll(path, arr);
+                        allLinesRecords[i] = "";
 
                         Console.WriteLine($"Запись с номером {control} удалена");
                         break;
                     }
                 }               
             }
+            return allLinesRecords;
         }
     }
 }

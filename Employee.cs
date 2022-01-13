@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace HomeWork7_2
@@ -9,28 +8,28 @@ namespace HomeWork7_2
     /// </summary>
     public struct Employee
     {
-        public string id;
+        public int id;
 
-        public string dateCreate;
+        public DateTime dateCreate;
 
         public string fullName;
 
-        public string age;
+        public int age;
 
-        public string height;
+        public int height;
 
-        public string dateOfBirth;
+        public DateTime dateOfBirth;
 
         public string placeOfBirth;
 
-        public Employee(string ID,
-                        string FullName, string Age,
-                        string Height, string DateOfBirth,
+        public Employee(int ID,
+                        string FullName, int Age,
+                        int Height, DateTime DateOfBirth,
                         string PlaceOfBirth)
         {
             id = ID;
 
-            dateCreate = DateTime.Now.ToString("dd.MM.yyyy hh:mm");
+            dateCreate = DateTime.Now;  //ToString("dd.MM.yyyy hh:mm");
 
             fullName = FullName;
 
@@ -44,11 +43,11 @@ namespace HomeWork7_2
         }
         public byte[] Record()
         {
-            string record = id + "#" + dateCreate + "#" + fullName +
-                "#" + age + "#" + height + "#" + dateOfBirth +
+            string record = id + "#" + dateCreate.ToString("dd.MM.yyyy hh:mm") + "#" + fullName +
+                "#" + age + "#" + height + "#" + dateOfBirth.ToString("dd.MM.yyyy") +
                 "#" + placeOfBirth + "\r\n";
 
-            byte[] array = System.Text.Encoding.Default.GetBytes(record);
+            byte[] array = Encoding.Default.GetBytes(record);
 
             return array;
         }

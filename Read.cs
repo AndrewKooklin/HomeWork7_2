@@ -12,24 +12,24 @@ namespace HomeWork7_2
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static string[] ReadAllText(string path)
-        {
-            using (StreamReader sr = new StreamReader(path))
-            {
-                char[] separator = { '#', '\r' };
+        //public static string[] ReadAllText(string path)
+        //{
+        //    using (StreamReader sr = new StreamReader(path))
+        //    {
+        //        char[] separator = { '#', '\r' };
 
-                string[] words = sr.ReadToEnd().Split(separator);
+        //        string[] words = sr.ReadToEnd().Split(separator);
 
-                if (words == null || words.Length <= 0 || words[0] == "")
-                {
-                    Console.WriteLine("В файле нет записей");
+        //        if (words == null || words.Length <= 0)
+        //        {
+        //            Console.WriteLine("В файле нет записей");
 
-                    return null;
-                }
-                return words;
-            }
+        //            return null;
+        //        }
+        //        return words;
+        //    }
 
-        }
+        //}
 
         /// <summary>
         /// Чтение выбранной записи из файла
@@ -37,34 +37,37 @@ namespace HomeWork7_2
         /// <param name="path"></param>
         /// <param name="control"></param>
         /// <returns></returns>
-        public static string[] ReadRecord(string path)
+        public static string[] ReadRecord(string[] allLinesRecords)
         {
-            string[] arr = Read.ReadAllLines(path);
+            if (allLinesRecords == null)
+            {
+                Console.WriteLine("В файле нет записей");
+                return null;
+            }
 
             int control = ControlInput.Input();
-
-            if (arr == null || control == 0)
+            if(control == 0)
             {
                 return null;
             }
 
             string[] words;
 
-            for (int i = 0; i < arr.Length; i++)
+            for (int i = 0; i < allLinesRecords.Length; i++)
             {
 
-                if (!arr[i].StartsWith(Convert.ToInt32(control) + "#") && !arr[i].StartsWith("\n" + Convert.ToInt32(control) + "#"))
+                if (!allLinesRecords[i].StartsWith(Convert.ToInt32(control) + "#") && !allLinesRecords[i].StartsWith("\n" + Convert.ToInt32(control) + "#"))
                 {
-                    if ((i == arr.Length - 1) && !arr[^1].StartsWith(Convert.ToInt32(control) + "#"))
+                    if ((i == allLinesRecords.Length - 1) && !allLinesRecords[^1].StartsWith(Convert.ToInt32(control) + "#"))
                     {
                         Console.WriteLine("В файле нет такой записи");
                         return null;
                     }
                     continue;
                 }
-                else if ( arr[i].StartsWith(Convert.ToInt32(control) + "#") || arr[i].StartsWith("\n" + Convert.ToInt32(control) + "#") )
+                else if (allLinesRecords[i].StartsWith(Convert.ToInt32(control) + "#") || allLinesRecords[i].StartsWith("\n" + Convert.ToInt32(control) + "#"))
                 {
-                    words = arr[i].Split('#');
+                    words = allLinesRecords[i].Split('#');
 
                     return words;
                 }
@@ -82,19 +85,53 @@ namespace HomeWork7_2
         {
             using (StreamReader sr = new StreamReader(path))
             {
-                char[] separator = { '\r' };
+                char[] separator = { '\n' };
 
                 string[] arr = sr.ReadToEnd().Split(separator);
 
                 sr.Close();
 
-                if (arr.Length <= 0 || arr == null || arr[0] == "")
+                int counter = 0; // кол-во пустых элементов в массиве
+
+                if (arr == null)
                 {
                     Console.WriteLine("В файле нет записей");
                     return null;
                 }
 
-                return arr;
+                for (int i = 0; i < arr.Length; i++)
+                {
+                    if (arr[i] == "" || arr[i] == null || arr[i] == "\r")
+                    {
+                        counter++;
+                    }
+                    else continue;
+                }
+
+                if (counter == arr.Length)
+                {
+                    Console.WriteLine("В файле нет записей");
+                    return null;
+                }
+                string[] newarr = new string[arr.Length - counter];
+
+
+                for (int j = 0; j < newarr.Length; j++)
+                {
+                    for (int i = 0; i < arr.Length; i++)
+                    {
+                        if (arr[i] == "" || arr[i] == null || arr[i] == "\r")
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            newarr[j] = arr[i].Replace("\r", "");
+                            //j++;
+                        }
+                    }
+                }
+                return newarr;
             }
         }
     }

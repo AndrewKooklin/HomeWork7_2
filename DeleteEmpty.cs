@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HomeWork7_2
 {
-    
+
     public static class DeleteEmpty
     {
         /// <summary>
@@ -13,6 +13,11 @@ namespace HomeWork7_2
         public static string[] Rewrite(string[] arr)
         {
             int counter = 0; // кол-во пустых элементов в массиве
+
+            if(arr == null)
+            {
+                return null;
+            }
 
             for (int i = 0; i < arr.Length; i++)
             {
@@ -23,22 +28,27 @@ namespace HomeWork7_2
                 else continue;
             }
 
-            if(counter == arr.Length)
+            if (counter == arr.Length)
             {
                 return null;
             }
             string[] newarr = new string[arr.Length - counter];
 
-            int j = 0;
 
-            for (int i = 0; i < arr.Length; i++)
+            for (int j = 0; j < newarr.Length; )
             {
-                if (arr[i] != "" && arr[i] != null)
+                for (int i = 0; i < arr.Length; i++)
                 {
-                    newarr[j] = arr[i].Replace("\n", "");
-                    j++;
+                    if (arr[i] == "" || arr[i] == null || arr[i] == "\n")
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        newarr[j] = arr[i].Replace("\n", "");
+                        j++;
+                    }
                 }
-                else continue;
             }
             return newarr;
         }

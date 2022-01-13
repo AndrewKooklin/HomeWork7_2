@@ -9,10 +9,10 @@ namespace HomeWork7_2
         /// <summary>
         /// Выбор пунктов основного меню
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="key"></param>
-        public static void Operation(string path, char key)
+        public static void Operation(string[] allLinesRecords, string path)
         {
+            char key;
+
             do
             {
 
@@ -28,65 +28,60 @@ namespace HomeWork7_2
 
                 char input = Console.ReadKey().KeyChar;
 
+                key = input;
+
                 Console.WriteLine();
 
                 switch (input)
                 {
                     case '1':
                         {
-                            PrintRecord.Print(Read.ReadAllText(path));
-                            key = ContinueProgramm.Continue();
+                            PrintRecord.PrintAllLines(Read.ReadAllLines(path));
                             break;
                         }
                     case '2':
                         {
-                            PrintRecord.Print(Read.ReadRecord(path));
-                            key = ContinueProgramm.Continue();
+                            PrintRecord.PrintOneRecord(Read.ReadRecord(allLinesRecords));
                             break;
                         }
                     case '3':
                         {
-                            Write.WriteOneRecord(path, InputRecord.CreateRecord(path));
-                            key = ContinueProgramm.Continue();
+                            Write.WriteOneRecord(path, InputRecord.CreateRecord());
                             break;
                         }
                     case '4':
                         {
-                            DeleteRecord.Delete(path);
-                            key = ContinueProgramm.Continue();
+                            Write.WriteAllLines(path, DeleteRecord.Delete(allLinesRecords));
                             break;
                         }
                     case '5':
                         {
-                            UpdateRecord.Update(path);
-                            key = ContinueProgramm.Continue();
+                            UpdateRecord.Update(allLinesRecords, path);
                             break;
                         }
                     case '6':
                         {
-                            PrintRecord.Print(SelectByDate.SelectDate(path));
-                            key = ContinueProgramm.Continue();
+                            PrintRecord.PrintAllLines(SelectByDate.SelectDate(allLinesRecords));
                             break;
                         }
                     case '7':
                         {
-                            Write.WriteAll(path, SortedByDate.Sorted(path));
-                            key = ContinueProgramm.Continue();
+                            Write.WriteAllLines(path, SortedByDate.Sorted(allLinesRecords));
                             break;
                         }
                     case '8':
                         {
                             Console.WriteLine("Программа завершена");
-                            key = 'n';
                             break;
                         }
                     default:
                         {
-                            Console.WriteLine("Введите цифру от 1 до 8 или букву");
+                            Console.WriteLine("Введите цифру от 1 до 8");
                             break;
                         }
                 }
-            } while (char.ToLower(key) == 'y');
+
+            } while ( key != '8');
         }
     }
 }

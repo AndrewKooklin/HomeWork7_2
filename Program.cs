@@ -12,9 +12,9 @@ namespace HomeWork7_2
 
             Console.WriteLine("\nПрограмма работы с записями о сотрудниках");
 
-            char key = 'n';
+            string[] allLinesRecords = Read.ReadAllLines(path);
 
-            ChooseAction.Operation(path, key);
+            ChooseAction.Operation(allLinesRecords, path);
 
             Console.ReadLine();
         }

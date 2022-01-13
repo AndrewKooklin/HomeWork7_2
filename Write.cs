@@ -25,16 +25,25 @@ namespace HomeWork7_2
         /// </summary>
         /// <param name="path"></param>
         /// <param name="arr"></param>
-        public static void WriteAll(string path, string[] arr)
+        public static void WriteAllLines(string path, string[] arr)
         {
-            string[] newarr = DeleteEmpty.Rewrite(arr);
+            //string[] newarr = DeleteEmpty.Rewrite(newArr);
 
-            using (StreamWriter sw = new StreamWriter(path))
+            //string[] newArr = arr;
+
+            if(arr != null)
             {
-                for (int i = 0; i < newarr.Length; i++)
+                using (StreamWriter sw = new StreamWriter(path))
                 {
-                        sw.WriteLine(newarr[i]);                  
+                    for (int i = 0; i < arr.Length; i++)
+                    {
+                        sw.WriteLine(arr[i]);
+                    }
                 }
+            }
+            else
+            {
+                Console.WriteLine("В файле нет записей");
             }
         }
     }

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HomeWork7_2
 {
@@ -11,20 +9,19 @@ namespace HomeWork7_2
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static string[] Sorted(string path)
+        public static string[] Sorted(string[] allLinesRecords)
         {
-            string[] lines = Read.ReadAllLines(path);
 
-            if (lines.Length <= 0 && lines == null || lines[0] == "")
+            if (allLinesRecords == null)
             {
                 return null;
             }
 
-            DateTime[] dateArr = new DateTime[lines.Length];
+            DateTime[] dateArr = new DateTime[allLinesRecords.Length];
 
             for (int i = 0; i < dateArr.Length; i++)
             {
-                string[] words = lines[i].Split('#');
+                string[] words = allLinesRecords[i].Split('#');
 
                 if (words == null || words[0] == "" || words[0] == "\n")
                 {
@@ -32,8 +29,6 @@ namespace HomeWork7_2
                 }
                 else dateArr[i] = Convert.ToDateTime(words[1]);
             }
-
-            
 
             Console.WriteLine("\nСортировка записей по дате" +
                 "\n введите цифру :" + "\n1 - для сортировке по возрастанию даты" +
@@ -44,7 +39,7 @@ namespace HomeWork7_2
             DateTime temp;
 
             if (numberSort == "1")
-            {                
+            {
                 for (int i = 0; i < dateArr.Length - 1; i++)
                 {
                     for (int j = i + 1; j < dateArr.Length; j++)
@@ -59,7 +54,7 @@ namespace HomeWork7_2
                 }
                 Console.WriteLine("Записи отсортированы по возрастанию даты создания");
             }
-            else if(numberSort == "2")
+            else if (numberSort == "2")
             {
                 for (int i = 0; i < dateArr.Length - 1; i++)
                 {
@@ -76,21 +71,21 @@ namespace HomeWork7_2
                 Console.WriteLine("Записи отсортированы по убыванию даты создания");
             }
 
-            string[] newarr = new string[lines.Length];
+            string[] newarr = new string[allLinesRecords.Length];
 
             for (int i = 0; i < dateArr.Length; i++)
             {
-                for(int j = 0; j < lines.Length; j++)
+                for (int j = 0; j < allLinesRecords.Length; j++)
                 {
-                    if (lines[j].Contains(dateArr[i].ToString("dd.MM.yyyy hh:mm")))
+                    if (allLinesRecords[j].Contains(dateArr[i].ToString("dd.MM.yyyy hh:mm")))
                     {
-                        newarr[i] = lines[j];
+                        newarr[i] = allLinesRecords[j];
                     }
                 }
             }
 
             return newarr;
         }
-
     }
 }
+

@@ -10,32 +10,88 @@ namespace HomeWork7_2
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static byte[] CreateRecord(string path)
+        public static byte[] CreateRecord()
         {
             Employee emp = new Employee();
 
-            Console.WriteLine("Введите ID сотрудника");
-            emp.id = Console.ReadLine();
+            do
+            {
+                Console.WriteLine("Введите ID сотрудника (целое число)");
 
-            emp.dateCreate = DateTime.Now.ToString("dd.MM.yyyy hh:mm");
+                bool input = int.TryParse(Console.ReadLine(), out emp.id);
+
+                if (input)
+                {
+                    break;
+                }
+                else 
+                { 
+                    Console.WriteLine("Вы ввели не число");
+                }
+            }
+            while (true);
+
+            emp.dateCreate = DateTime.Now;
 
             Console.WriteLine("Введите Ф.И.О.");
             emp.fullName = Console.ReadLine();
 
-            Console.WriteLine("Введите возраст");
-            emp.age = Console.ReadLine();
+            do
+            {
+                Console.WriteLine("Введите возраст (целое число)");
 
-            Console.WriteLine("Введите рост в см");
-            emp.height = Console.ReadLine();
+                bool input = int.TryParse(Console.ReadLine(), out emp.age);
 
-            Console.WriteLine("Введите дату рождения");
-            emp.dateOfBirth = Console.ReadLine();
+                if (input)
+                {
+                    break;
+                }
+                else 
+                {
+                    Console.WriteLine("Вы ввели не число");
+                }
+            }
+            while (true);
+
+            do
+            {
+                Console.WriteLine("Введите рост в см (целое число)");
+
+                bool input = int.TryParse(Console.ReadLine(), out emp.height);
+
+                if (input)
+                {
+                    break;
+                }
+                else
+                { 
+                    Console.WriteLine("Вы ввели не число"); 
+                }
+            }
+            while (true);
+
+            do
+            {
+                Console.WriteLine("Введите дату рождения в числовом формате dd.MM.yyyy");
+
+                bool input = DateTime.TryParse(Console.ReadLine(), out emp.dateOfBirth);
+
+                if (input)
+                {
+                    break;
+                }
+                else
+                { 
+                    Console.WriteLine("Вы ввели неверный формат");
+                }
+            }
+            while (true);
 
             Console.WriteLine("Введите место рождения");
             emp.placeOfBirth = "Город " + Console.ReadLine();
 
             Console.WriteLine();
-            Console.WriteLine($"Запись в файле {Path.GetFileName(path)} создана");
+            Console.WriteLine($"Запись в файле создана");
 
             return emp.Record();
 
