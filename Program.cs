@@ -8,13 +8,13 @@ namespace HomeWork7_2
         {
             string path = @"Employees.txt";
 
-            CreateFile.Creation(path);
+            FileMethods.Creation(path);
 
             Console.WriteLine("\n Программа работы с записями о сотрудниках");
 
-            string[] allLinesRecords = Read.ReadAllLines(path);
+            string[] allLinesRecords = FileMethods.ReadAllLines(path);
 
-            ChooseAction.Operation(allLinesRecords, path);
+            Communication.Operation(allLinesRecords, path);
 
             Console.ReadLine();
         }
