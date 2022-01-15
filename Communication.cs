@@ -63,12 +63,12 @@ namespace HomeWork7_2
                         }
                     case '4':
                         {
-                            FileMethods.Delete(allLinesRecords);
+                            allLinesRecords = FileMethods.Delete(allLinesRecords);
                             break;
                         }
                     case '5':
                         {
-                            FileMethods.Update(allLinesRecords);
+                            allLinesRecords = FileMethods.Update(allLinesRecords);
                             break;
                         }
                     case '6':
@@ -78,7 +78,7 @@ namespace HomeWork7_2
                         }
                     case '7':
                         {
-                            FileMethods.Sorted(allLinesRecords);
+                            allLinesRecords = FileMethods.Sorted(allLinesRecords);
                             break;
                         }
                     case '8':
