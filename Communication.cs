@@ -17,14 +17,15 @@ namespace HomeWork7_2
             {
 
                 Console.WriteLine("\n Введите цифру :" +
-                    "\n 1 - для просмотра файла" +
+                    "\n 1 - для просмотра всех записей" +
                     "\n 2 - для просмотра записи" +
                     "\n 3 - для создания записи" +
                     "\n 4 - для удаления записи" +
                     "\n 5 - для редактирования записи" +
                     "\n 6 - для чтения записей в выбранном доапазоне дат" +
-                    "\n 7 - для сортировки записи по возрастанию и убыванию дат" +
-                    "\n 8 - для выхода из программы");
+                    "\n 7 - для сортировки записей по возрастанию и убыванию дат" +
+                    "\n 8 - для записи всех изменений в файл" +
+                    "\n 9 - для выхода из программы");
 
                 char input = Console.ReadKey().KeyChar;
 
@@ -36,7 +37,7 @@ namespace HomeWork7_2
                 {
                     case '1':
                         {
-                            FileMethods.PrintAllLines(FileMethods.ReadAllLines(path));
+                            FileMethods.PrintAllLines(allLinesRecords);
                             break;
                         }
                     case '2':
@@ -45,31 +46,47 @@ namespace HomeWork7_2
                             break;
                         }
                     case '3':
-                        {
-                            FileMethods.WriteOneRecord(path, Communication.CreateRecord());
+                        {   
+                            if(allLinesRecords == null)
+                            {
+                                allLinesRecords = new string[1];
+
+                                allLinesRecords[^1] = Communication.CreateRecord();
+                            }
+                            else
+                            {
+                                Array.Resize(ref allLinesRecords, allLinesRecords.Length + 1);
+
+                                allLinesRecords[^1] = Communication.CreateRecord();
+                            }
                             break;
                         }
                     case '4':
                         {
-                            FileMethods.WriteAllLines(path, FileMethods.Delete(allLinesRecords));
+                            FileMethods.Delete(allLinesRecords);
                             break;
                         }
                     case '5':
                         {
-                            FileMethods.Update(allLinesRecords, path);
+                            FileMethods.Update(allLinesRecords);
                             break;
                         }
                     case '6':
                         {
-                            FileMethods.PrintAllLines(FileMethods.SelectDate(allLinesRecords));
+                            FileMethods.SelectDate(allLinesRecords);
                             break;
                         }
                     case '7':
                         {
-                            FileMethods.WriteAllLines(path, FileMethods.Sorted(allLinesRecords));
+                            FileMethods.Sorted(allLinesRecords);
                             break;
                         }
                     case '8':
+                        {
+                            FileMethods.WriteAllLines(path, allLinesRecords);
+                            break;
+                        }
+                    case '9':
                         {
                             Console.WriteLine("Программа завершена");
                             break;
@@ -81,7 +98,7 @@ namespace HomeWork7_2
                         }
                 }
 
-            } while (key != '8');
+            } while (key != '9');
         }
 
         /// <summary>
@@ -111,7 +128,7 @@ namespace HomeWork7_2
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static byte[] CreateRecord()
+        public static string CreateRecord()
         {
             FileMethods.Employee emp = new FileMethods.Employee();
 
@@ -192,10 +209,9 @@ namespace HomeWork7_2
             emp.placeOfBirth = "Город " + Console.ReadLine();
 
             Console.WriteLine();
-            Console.WriteLine($"Запись в файле создана");
+            Console.WriteLine($"Запись в массиве создана");
 
-            return emp.Record();
-
+            return emp.Record();            
         }
     }
 }

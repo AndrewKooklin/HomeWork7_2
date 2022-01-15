@@ -45,15 +45,13 @@ namespace HomeWork7_2
 
                 placeOfBirth = PlaceOfBirth;
             }
-            public byte[] Record()
+            public string Record()
             {
                 string record = id + "#" + dateCreate.ToString("dd.MM.yyyy hh:mm") + "#" + fullName +
                     "#" + age + "#" + height + "#" + dateOfBirth.ToString("dd.MM.yyyy") +
                     "#" + placeOfBirth + "\r\n";
 
-                byte[] array = Encoding.Default.GetBytes(record);
-
-                return array;
+                return record;
             }
         }
 
@@ -73,8 +71,9 @@ namespace HomeWork7_2
         /// </summary>
         public static string[] Delete(string[] allLinesRecords)
         {
-            if(allLinesRecords == null)
+            if (allLinesRecords == null)
             {
+                Console.WriteLine("В файле нет записей");
                 return null;
             }
             else
@@ -87,7 +86,7 @@ namespace HomeWork7_2
                     {
                         if ((i == allLinesRecords.Length - 1) && !allLinesRecords[^1].StartsWith(Convert.ToInt32(control) + "#"))
                         {
-                            Console.WriteLine("В файле нет такой записи");
+                            Console.WriteLine("В массиве нет такой записи");
                         }
                         continue;
                     }
@@ -100,23 +99,30 @@ namespace HomeWork7_2
                     }
                 }
             }
-            return allLinesRecords;
+            string[] newAllLinesRecords = FileMethods.DeleteEmpty(allLinesRecords);
+
+            return newAllLinesRecords;
         }
 
         /// <summary>
         /// Обновление данных в записи
         /// </summary>
         /// <param name="path"></param>
-        public static void Update(string[] allLinesRecords, string path)
+        public static string[] Update(string[] allLinesRecords)
         {
-            if (allLinesRecords != null)
+            if (allLinesRecords == null)
+            {
+                Console.WriteLine("В массиве нет записей");
+                return null;
+            }
+            else if (allLinesRecords != null)
             {
 
                 int index = FileMethods.GetIndexLine(allLinesRecords, Communication.Input());
 
                 if (index < 0)
                 {
-                    Console.WriteLine("В файле нет такой записи");
+                    Console.WriteLine("В массиве нет такой записи");
                 }
                 else
                 {
@@ -223,22 +229,17 @@ namespace HomeWork7_2
                                 default:
                                     Console.WriteLine("Введите цифру от 1 до 5 :");
                                     break;
-
                             }
                         }
                         while (Convert.ToInt32(char.ToLower(input)) > 0 && Convert.ToInt32(char.ToLower(input)) < 6);
 
-                        allLinesRecords[index] = Encoding.UTF8.GetString(emp.Record());
+                        allLinesRecords[index] = emp.Record();
 
-                        FileMethods.WriteAllLines(path, allLinesRecords);
-
+                        return allLinesRecords;
                     }
                 }
             }
-            else
-            {
-                Console.WriteLine("В файле нет записей");
-            }
+            return allLinesRecords;
         }
 
         /// <summary>
@@ -268,7 +269,7 @@ namespace HomeWork7_2
         {
             if (allLinesRecords == null)
             {
-                Console.WriteLine("В файле нет записей");
+                Console.WriteLine("В массиве нет записей");
                 return null;
             }
 
@@ -280,7 +281,7 @@ namespace HomeWork7_2
 
             if (index < 0)
             {
-                Console.WriteLine("В файле нет такой записи");
+                Console.WriteLine("В массиве нет такой записи");
                 return null;
             }
             else
@@ -402,19 +403,6 @@ namespace HomeWork7_2
         }
 
         /// <summary>
-        /// Запись добавленного сотрудника в конец файла
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="array"></param>
-        public static void WriteOneRecord(string path, byte[] array)
-        {
-            using (FileStream fs = new FileStream(path, FileMode.Append, FileAccess.Write))
-            {
-                fs.Write(array, 0, array.Length);
-            }
-        }
-
-        /// <summary>
         /// Запись всех строк в файл
         /// </summary>
         /// <param name="path"></param>
@@ -427,7 +415,7 @@ namespace HomeWork7_2
             {
                 using (StreamWriter sw = new StreamWriter(path))
                 {
-                        sw.WriteLine("");                
+                    sw.WriteLine("");
                 }
                 Console.WriteLine(" В файле нет записей");
             }
@@ -437,9 +425,11 @@ namespace HomeWork7_2
                 {
                     for (int i = 0; i < arr.Length; i++)
                     {
-                        sw.WriteLine(arr[i]);
+                        sw.WriteLine(arr[i]);                        
                     }
-                }               
+
+                    Console.WriteLine("Записи добавлены в файл");
+                }
             }
         }
 
@@ -451,7 +441,11 @@ namespace HomeWork7_2
         {
             words = FileMethods.DeleteEmpty(words);
 
-            if (words != null)
+            if (words == null)
+            {
+                Console.WriteLine("В массиве нет записей");
+            }
+            else if (words != null)
             {
                 for (int i = 0; i < words.Length; i++)
                 {
@@ -605,6 +599,7 @@ namespace HomeWork7_2
 
             if (allLinesRecords == null)
             {
+                Console.WriteLine("В фале нет записей");
                 return null;
             }
 
